@@ -92,14 +92,13 @@ def main(tags):
         df = pd.read_csv(csv)
         target = float(df["target_mse"].iloc[0])
         budget = int(df["budget"].max())
+        # titles are derived from the actual evaluated configuration (n, d, k)
         P.plot_mse_vs_epochs(df, path=os.path.join(P.FIG_DIR, f"{tag}_mse_vs_epochs.png"),
-                             ycol="test_mse", target_mse=target, title=f"Test MSE vs epochs — {tag}")
+                             ycol="test_mse", target_mse=target)
         P.plot_mse_vs_time(df, path=os.path.join(P.FIG_DIR, f"{tag}_mse_vs_time.png"),
-                           ycol="test_mse", target_mse=target, title=f"Test MSE vs wall-clock — {tag}")
-        P.plot_runtime_bars(df, budget, path=os.path.join(P.FIG_DIR, f"{tag}_runtime_bars.png"),
-                            title=f"Runtime at {budget} epochs — {tag}")
-        P.plot_time_to_target(df, path=os.path.join(P.FIG_DIR, f"{tag}_time_to_target.png"),
-                              title=f"Time to target objective — {tag}")
+                           ycol="test_mse", target_mse=target)
+        P.plot_runtime_bars(df, budget, path=os.path.join(P.FIG_DIR, f"{tag}_runtime_bars.png"))
+        P.plot_time_to_target(df, path=os.path.join(P.FIG_DIR, f"{tag}_time_to_target.png"))
 
         table, t_lloyd, t_best, ref_time = summarize(df, budget=budget)
         print(f"\n=== {tag} ===")

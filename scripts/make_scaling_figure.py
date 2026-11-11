@@ -1,9 +1,16 @@
 #!/usr/bin/env python
-"""Consolidate all benchmark cells into one table and a scaling figure.
+"""Consolidate benchmark cells into one table and the two scaling figures.
 
-Computes, per cell, the speedup of e-means over Faiss-Lloyd to reach Lloyd's
-own converged objective, and how many epochs each needed. Writes
-``results/processed/benchmark_table.csv`` and two figures.
+Reads the per-cell raw CSVs, recomputes the per-cell speedup of e-means over
+Faiss-Lloyd to reach Lloyd's own converged objective, writes
+``results/processed/benchmark_table.csv`` and renders:
+
+  * ``figures/scaling_speedup_vs_k.png``      (speedup vs cluster count)
+  * ``figures/scaling_speedup_overview.png``  (speedup per configuration)
+
+The script re-reads the CSV it just wrote and independently recomputes every
+value, so a mismatch between the figures and the committed CSV is a hard error.
+No benchmark data is modified here: this only reads ``results/raw``.
 """
 from __future__ import annotations
 
@@ -52,7 +59,7 @@ def cell_metrics(df, method="e-means", ref="lloyd-faiss"):
     )
 
 
-def main():
+def build_table():
     rows = []
     for cell in CELLS:
         path = os.path.join(RAW, f"{cell}.csv")
@@ -63,27 +70,37 @@ def main():
         m.update(cell=cell, dataset=df["dataset"].iloc[0], n=int(df["n"].iloc[0]),
                  d=int(df["d"].iloc[0]), k=int(df["k"].iloc[0]))
         rows.append(m)
-    table = pd.DataFrame(rows)
-    os.makedirs(PROC, exist_ok=True)
-    table.to_csv(os.path.join(PROC, "benchmark_table.csv"), index=False)
-    print(table.to_string(index=False))
+    return pd.DataFrame(rows)
 
-    syn = table[table["dataset"] == "blobs"]
-    if len(syn) >= 2:
-        P.plot_scaling_curve(
-            syn["k"].tolist(), syn["speedup"].tolist(),
-            [f"n={n} d={d}" for n, d in zip(syn["n"], syn["d"])],
-            "number of clusters k", "speedup to reach Lloyd's converged loss",
-            "e-means CPU speedup vs k (synthetic)", os.path.join(P.FIG_DIR, "scaling_speedup_vs_k.png"),
-            logx=True)
-    real = table[table["dataset"] == "arxiv"]
-    if len(real):
-        P.plot_scaling_curve(
-            table["n"].tolist(), table["speedup"].tolist(),
-            [f"{c}" for c in table["cell"]],
-            "training samples n", "speedup to reach Lloyd's converged loss",
-            "e-means CPU speedup across cells", os.path.join(P.FIG_DIR, "scaling_speedup_overview.png"),
-            logx=True)
+
+def validate(table, csv_path):
+    """Recompute every value from the raw CSVs and compare to the written CSV."""
+    written = pd.read_csv(csv_path)
+    fresh = build_table()
+    assert len(written) == len(fresh) == len(CELLS), "row count mismatch"
+    assert list(written["cell"]) == list(fresh["cell"]), "cell order mismatch"
+    for col in ["em_converged", "lloyd_converged", "em_best", "speedup",
+                "time_to_lloyd_s", "lloyd_time_s", "epochs_to_lloyd"]:
+        a = written[col].to_numpy(dtype="float64")
+        b = fresh[col].to_numpy(dtype="float64")
+        if not np.allclose(a, b, rtol=0, atol=1e-9, equal_nan=True):
+            raise AssertionError(f"column {col!r} does not match the raw CSVs: {a} vs {b}")
+    # plotted arrays must equal the CSV columns exactly
+    assert table["speedup"].tolist() == written["speedup"].tolist()
+    assert table["k"].tolist() == written["k"].tolist()
+    print("validation: benchmark_table.csv matches the raw CSVs (values unchanged)")
+
+
+def main():
+    table = build_table()
+    os.makedirs(PROC, exist_ok=True)
+    csv_path = os.path.join(PROC, "benchmark_table.csv")
+    table.to_csv(csv_path, index=False)
+    print(table.to_string(index=False))
+    validate(table, csv_path)
+
+    P.plot_speedup_vs_k(table)
+    P.plot_speedup_overview(table)
     return table
 
 

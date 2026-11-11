@@ -1,7 +1,0 @@
-method,epochs_to_target,time_to_target_s,speedup_vs_Lloyd@budget,best_train_mse,reached_target
-e-means,1,0.0269,0.634,131.2715,True
-lloyd-faiss,10,0.01527,1.117,139.46791,True
-lloyd-faiss-loop,10,0.80918,0.021,139.46791,True
-lloyd-sklearn,10,0.01236,1.38,139.46791,True
-lloyd-sklearn-pp,1,0.19082,0.089,131.31346,True
-minibatch,3,0.02982,0.572,141.32693,True
