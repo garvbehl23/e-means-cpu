@@ -1,0 +1,20 @@
+This project reproduces and benchmarks the following work. All credit for the
+algorithm and its official implementation belongs to the original authors.
+
+Paper
+  e-means: outperforming k-means (in one-tenth the epochs)
+  Bessa, Swann; Mazare, Pierre-Emmanuel; Szilvasy, Gergely; Touvron, Hugo;
+  Picard, David; Douze, Matthijs; Jegou, Herve (FAIR at Meta).
+  arXiv:2611.09501  https://arxiv.org/abs/2611.09501
+  License: CC BY 4.0 (paper text)
+
+Official implementation (used unmodified, via the faiss package)
+  facebookresearch/faiss, contrib/e_means/
+  Copyright (c) Meta Platforms, Inc. and affiliates.
+  License: MIT
+  https://github.com/facebookresearch/faiss/tree/main/contrib/e_means
+
+Dataset (downloaded at runtime, not redistributed here)
+  Qdrant/arxiv-titles-instructorxl-embeddings (HuggingFace)
+  arXiv titles embedded with the instructor-xl model, 768 dimensions.
+  https://huggingface.co/datasets/Qdrant/arxiv-titles-instructorxl-embeddings

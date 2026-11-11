@@ -1,0 +1,5 @@
+method,converged_mse,best_mse,epochs_to_lloyd,time_to_lloyd_s,speedup_lloyd,epochs_to_best,time_to_best_s,reached_best
+e-means,0.3432,0.3432,10.0,7.07725,1.0,10.0,7.07725,True
+e-means-no-cosine,0.3446,0.3444,,,,,,False
+e-means-no-ema,0.3446,0.3446,,,,,,False
+e-means-no-revival,0.3478,0.3478,,,,,,False

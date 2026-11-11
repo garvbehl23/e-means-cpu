@@ -1,0 +1,12 @@
+{
+  "name": "blobs_n100000_d384_k128",
+  "rows": 90,
+  "methods": [
+    "e-means",
+    "lloyd-faiss",
+    "lloyd-sklearn",
+    "lloyd-sklearn-pp",
+    "minibatch"
+  ],
+  "created": "2026-11-11 15:18:00"
+}

@@ -1,0 +1,14 @@
+{
+  "threads": 4,
+  "seeds": [0, 1, 2],
+  "budgets": [1, 2, 3, 5, 10, 25],
+  "methods": ["e-means", "lloyd-faiss", "lloyd-sklearn", "lloyd-sklearn-pp", "minibatch"],
+  "minibatch_size": 1024,
+  "cells": [
+    {"dataset": "blobs", "n": 10000, "d": 128, "k": 64},
+    {"dataset": "blobs", "n": 100000, "d": 128, "k": 64},
+    {"dataset": "blobs", "n": 100000, "d": 384, "k": 128},
+    {"dataset": "blobs", "n": 100000, "d": 128, "k": 1024},
+    {"dataset": "arxiv", "n": 50000, "d": 768, "k": 128}
+  ]
+}

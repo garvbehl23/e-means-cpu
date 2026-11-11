@@ -1,0 +1,26 @@
+[project]
+name = "emeans-cpu"
+version = "0.1.0"
+description = "CPU-only reproduction and benchmark of e-means (arXiv:2611.09501) vs Lloyd and MiniBatch k-means"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "garvbehl23" }]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "scikit-learn>=1.4",
+    "faiss-cpu>=1.16",
+    "matplotlib>=3.8",
+    "pandas>=2.0",
+    "pyarrow>=14",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools]
+py-modules = []

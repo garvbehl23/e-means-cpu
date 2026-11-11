@@ -1,0 +1,11 @@
+{
+  "threads": 4,
+  "seeds": [0, 1, 2],
+  "budgets": [1, 2, 3, 5, 10],
+  "methods": ["e-means", "e-means-no-cosine", "e-means-no-revival", "e-means-no-ema"],
+  "minibatch_size": 1024,
+  "cells": [
+    {"dataset": "arxiv", "n": 50000, "d": 768, "k": 128, "tag": "arxiv_n50000_d768_k128_ablation"},
+    {"dataset": "blobs", "n": 100000, "d": 128, "k": 1024, "tag": "blobs_n100000_d128_k1024_ablation"}
+  ]
+}

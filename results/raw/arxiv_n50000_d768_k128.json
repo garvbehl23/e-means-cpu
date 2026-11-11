@@ -1,0 +1,12 @@
+{
+  "name": "arxiv_n50000_d768_k128",
+  "rows": 90,
+  "methods": [
+    "e-means",
+    "lloyd-faiss",
+    "lloyd-sklearn",
+    "lloyd-sklearn-pp",
+    "minibatch"
+  ],
+  "created": "2026-11-11 15:41:01"
+}

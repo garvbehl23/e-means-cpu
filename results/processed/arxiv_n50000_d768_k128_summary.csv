@@ -1,0 +1,6 @@
+method,converged_mse,best_mse,epochs_to_lloyd,time_to_lloyd_s,speedup_lloyd,epochs_to_best,time_to_best_s,reached_best
+e-means,0.3432,0.3432,2.0,1.47329,1.087,25.0,16.85992,True
+lloyd-faiss,0.3444,0.3444,25.0,1.60206,1.0,,,False
+lloyd-sklearn,0.3439,0.3439,25.0,2.07449,0.772,,,False
+lloyd-sklearn-pp,0.3436,0.3436,25.0,15.77988,0.102,,,False
+minibatch,0.3497,0.3497,,,,,,False

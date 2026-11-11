@@ -1,0 +1,13 @@
+{
+  "name": "blobs_n10000_d128_k64",
+  "rows": 108,
+  "methods": [
+    "e-means",
+    "lloyd-faiss",
+    "lloyd-faiss-loop",
+    "lloyd-sklearn",
+    "lloyd-sklearn-pp",
+    "minibatch"
+  ],
+  "created": "2026-11-11 15:07:46"
+}

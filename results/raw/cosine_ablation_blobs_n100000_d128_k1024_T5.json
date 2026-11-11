@@ -1,0 +1,9 @@
+{
+  "name": "cosine_ablation_blobs_n100000_d128_k1024_T5",
+  "rows": 6,
+  "methods": [
+    "constant_retuned",
+    "cosine"
+  ],
+  "created": "2026-11-11 15:54:40"
+}
